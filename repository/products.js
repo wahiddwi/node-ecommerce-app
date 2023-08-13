@@ -3,7 +3,7 @@ import dbPool from "../utils/connection.js";
 export const createProduct = (name, price, quantity, image) => {
   let createdAt = new Date();
   const sql =
-    "INSERT INTO product (name, price, quantity, image, created_at) VALUE (?, ?, ?)";
+    "INSERT INTO product (name, price, quantity, image, created_at) VALUE (?, ?, ?, ?, ?)";
   const value = [name, price, quantity, image, createdAt];
 
   return dbPool.query(sql, value);

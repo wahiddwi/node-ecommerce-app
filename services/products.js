@@ -1,4 +1,5 @@
 import * as ProductsRepo from "../repository/products.js";
+import multer from "multer";
 import {
   successResponse,
   errorResponse,

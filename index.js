@@ -4,6 +4,7 @@ import * as ProductServices from "./services/products.js";
 import * as UserServices from "./services/users.js";
 import * as CategoryServices from "./services/categories.js";
 import * as OrderServices from "./services/orders.js";
+import * as OrderItemServices from "./services/order_item.js";
 
 const app = express();
 const port = 8080;
@@ -28,6 +29,11 @@ app.post("/api/register", UserServices.register);
 app.get("/api/users", UserServices.getAllUsers);
 app.put("/api/user/:id", UserServices.updateUser);
 app.delete("/api/user/:id", UserServices.deleteUser);
+
+app.get("/api/order-items", OrderItemServices.getAllOrderItems);
+app.post("/api/order-item", OrderItemServices.createOrderItem);
+app.put("/api/order-item/:id", OrderItemServices.updateOrderItem);
+app.delete("/api/order-item/:id", OrderItemServices.deleteOrderItem);
 
 app.get("/api/orders", OrderServices.getAllOrders);
 app.post("/api/order", OrderServices.createorders);

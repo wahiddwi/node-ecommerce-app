@@ -1,26 +1,26 @@
 import dbPool from "../utils/connection.js";
 
-export const createProduct = (name, price, quantity, image) => {
+export const createProduct = (name, price, stock, image) => {
   let createdAt = new Date();
   const sql =
-    "INSERT INTO product (name, price, quantity, image, created_at) VALUE (?, ?, ?, ?, ?)";
-  const value = [name, price, quantity, image, createdAt];
+    "INSERT INTO product (name, price, stock, image, created_at) VALUE (?, ?, ?, ?, ?)";
+  const value = [name, price, stock, image, createdAt];
 
   return dbPool.query(sql, value);
 };
 
 export const getAllProducts = () => {
-  const sql = "SELECT id, name, image, created_at FROM product";
+  const sql = "SELECT id, name, price, stock, image, created_at FROM product";
   const result = dbPool.query(sql);
 
   return result;
 };
 
-export const updateProduct = (name, price, quantity, image, id) => {
+export const updateProduct = (name, price, stock, image, id) => {
   let updatedAt = new Date();
   const sql =
-    "UPDATE product SET name = ?, price = ?, quantity = ?, image = ?, updated_at = ? WHERE id = ?";
-  const value = [name, price, quantity, image, updatedAt, id];
+    "UPDATE product SET name = ?, price = ?, stock = ?, image = ?, updated_at = ? WHERE id = ?";
+  const value = [name, price, stock, image, updatedAt, id];
 
   return dbPool.query(sql, value);
 };

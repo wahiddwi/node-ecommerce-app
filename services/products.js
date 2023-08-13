@@ -10,11 +10,11 @@ export const createProduct = async (request, response, next) => {
     let name = request.body.name;
     let image = request.body.image;
     let price = request.body.price;
-    let quantity = request.body.quantity;
+    let stock = request.body.stock;
     const [result] = await ProductsRepo.createProduct(
       name,
       price,
-      quantity,
+      stock,
       image
     );
     successResponse(response, "berhasil menambahkan data", result.insertId);
@@ -39,11 +39,11 @@ export const updateProduct = async (request, response, next) => {
     let name = request.body.name;
     let image = request.body.image;
     let price = request.body.price;
-    let quantity = request.body.quantity;
+    let stock = request.body.stock;
     const [result] = await ProductsRepo.updateProduct(
       name,
       price,
-      quantity,
+      stock,
       image,
       id
     );

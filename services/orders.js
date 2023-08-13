@@ -1,5 +1,4 @@
 import * as OrdersRepo from "../repository/orders.js";
-import * as OrderItemsRepo from "../repository/order_item.js";
 import {
   successResponse,
   errorResponse,
@@ -8,22 +7,10 @@ import {
 
 export const createorders = async (request, response, next) => {
   try {
-    let productId = request.body.product_id;
-    let quantity = request.body.quantity;
-    const [orderItems] = await OrderItemsRepo.createOrderItem(
-      productId,
-      quantity
-    );
-
-    let orderItemId = orderItems.id;
+    let orderItemId = request.body.order_item_id;
     let shippingAddress = request.body.shipping_address;
     const [orders] = await OrdersRepo.createOrder(orderItemId, shippingAddress);
-    successResponse(
-      response,
-      "berhasil menambahkan data",
-      orderItems.insertId,
-      orders.insertId
-    );
+    successResponse(response, "berhasil menambahkan data", orders.insertId);
   } catch (error) {
     console.log(error);
     next(error);
@@ -41,30 +28,16 @@ export const getAllOrders = async (request, response, next) => {
 
 export const updateOrder = async (request, response, next) => {
   try {
-    let orderItemId = request.params.id;
-    let productId = request.body.product_id;
-    let quantity = request.body.quantity;
-    const [orderItems] = await OrderItemsRepo.updateOrderItem(
-      orderItemId,
-      productId,
-      quantity
-    );
-
     let orderId = request.params.id;
-    let orderItemIds = orderItems.orderItemId;
+    let orderItemId = request.body.order_item_id;
     let shippingAddress = request.body.shipping_address;
     const [orders] = await OrdersRepo.updateOrder(
       orderId,
-      orderItemIds,
+      orderItemId,
       shippingAddress
     );
     if (orders.affectedRows > 0) {
-      successResponse(
-        response,
-        "Data berhasil diubah",
-        orders.affectedRows,
-        orderItems.affectedRows
-      );
+      successResponse(response, "Data berhasil diubah", orders.affectedRows);
     } else {
       errorResponse(response, "Data tidak ditemukan", 404);
     }
@@ -75,17 +48,10 @@ export const updateOrder = async (request, response, next) => {
 
 export const deleteOrder = async (request, response, next) => {
   try {
-    let orderItemId = request.params.id;
     let orderId = request.params.id;
-    const [orderItems] = await OrderItemsRepo.deleteOrderItem(orderItemId);
     const [orders] = await OrdersRepo.deleteOrder(orderId);
     if (orders.affectedRows > 0) {
-      successResponse(
-        response,
-        "berhasil menghapus data",
-        orders.affectedRows,
-        orderItems.affectedRows
-      );
+      successResponse(response, "berhasil menghapus data", orders.affectedRows);
     } else {
       errorResponse(response, "data tidak ditemukan", 404);
     }

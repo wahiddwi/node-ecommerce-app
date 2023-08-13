@@ -2,12 +2,18 @@ import express from "express";
 
 import * as ProductServices from "./services/products.js";
 import * as UserServices from "./services/users.js";
+import * as CategoryServices from "./services/categories.js";
 
 const app = express();
 const port = 8080;
 const host = "localhost";
 
 app.use(express.json());
+
+app.get("/api/categories", CategoryServices.getAllCategories);
+app.post("/api/category", CategoryServices.createCategory);
+app.put("/api/category/:id", CategoryServices.updateCategory);
+app.delete("/api/category/:id", CategoryServices.deleteCategory);
 
 app.get("/api/products", ProductServices.getAllProducts);
 app.post("/api/product", ProductServices.createProduct);
